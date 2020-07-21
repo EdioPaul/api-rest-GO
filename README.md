@@ -21,8 +21,3 @@ localhost:8080/contato/id
 Para URL, utilizar extensão do Chrome para melhor visualizacão.
 
 https://chrome.google.com/webstore/detail/json-viewer/gbmdgpbipfallnflgajpaliibnhdgobh?hl=pt-BR
-
-
-
-Utilizado dados de exemplo manuais ao invés de usar o banco de dados, criado rotas que realizam várias operações com JSON e 
-slices que são tipos de variáveis nativas em Go.
