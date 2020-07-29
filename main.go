@@ -49,6 +49,23 @@ func CreatePerson(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(people)
 }
 
+// UpdatePerson atualiza um contato
+func UpdatePerson (w http.ResponseWriter, r *http.Request){
+	params := mux.Vars(r)
+	for index, item := range people {
+		if item.ID == params["id"] {
+			people = append(people[:index], people[index+1:]...)
+			break
+		}
+		json.NewEncoder(w).Encode(people)
+	}
+	var person Person
+	_ = json.NewDecoder(r.Body).Decode(&person)
+	person.ID = params["id"]
+	people = append(people, person)
+	json.NewEncoder(w).Encode(people)
+}
+
 // DeletePerson deleta um contato
 func DeletePerson(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
@@ -69,6 +86,7 @@ func main() {
 	router.HandleFunc("/contato", GetPeople).Methods("GET")
 	router.HandleFunc("/contato/{id}", GetPerson).Methods("GET")
 	router.HandleFunc("/contato/{id}", CreatePerson).Methods("POST")
+	router.HandleFunc("/contato/{id}", UpdatePerson).Methods("PUT")
 	router.HandleFunc("/contato/{id}", DeletePerson).Methods("DELETE")
-	log.Fatal(http.ListenAndServe(":8000", router))
+	log.Fatal(http.ListenAndServe(":8080", router))
 }
